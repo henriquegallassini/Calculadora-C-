@@ -88,12 +88,11 @@ int main() {
          break;
 
        case 4:
-        do{
+         while(n2 == 0){
           std::cout << "Impossível divisão por 0, digite outro segundo número." << std::endl;
           std::cout << "Digite um segundo número: ";
           std::cin >> n2;
-
-        }while(n2 == 0);
+        }
 
         std::cout << "Divisão: " << n1 / n2 << std::endl;
         break;
@@ -113,23 +112,21 @@ int main() {
         break;
 
       case 7:
-        do{
-          std::cout << "Operação impossível, não exite raíz de número negativo tente novamente" << std::endl;
-          std::cout << "Digite o primeiro número" << std::endl;
-          std::cin >> n1;
+        while(n1 < 0){
+         std::cout << "Operação impossível, não exite raíz de número negativo tente novamente" << std::endl;
+         std::cout << "Digite o primeiro número" << std::endl;
+         std::cin >> n1;
+         }
 
-        }while(n1 < 0);
+         while(n2 < 0){
+         std::cout << "Operação impossível, não exite raíz de número negativo tente novamente" << std::endl;
+         std::cout << "Digite o segundo número" << std::endl;
+         std::cin >> n2;
+         }
 
-        do{
-          std::cout << "Operação impossível, não exite raíz de número negativo tente novamente" << std::endl;
-          std::cout << "Digite o segundo número" << std::endl;
-          std::cin >> n2;
-
-        }while(n2 < 0);
-
-        std::cout << "Raíz Quadrada de " << n1 << " = " << sqrt(n1) << std::endl;
-        std::cout << "Raíz Quadrada de " << n2 << " = " << sqrt(n2) << std::endl;
-        break;
+         std::cout << "Raíz Quadrada de " << n1 << " = " << sqrt(n1) << std::endl;
+         std::cout << "Raíz Quadrada de " << n2 << " = " << sqrt(n2) << std::endl;
+         break;
 
       default:
        std::cout << "Opção escolhida é inválida, tente novamente" << std::endl;
