@@ -1,0 +1,17 @@
+# Executáveis
+*.exe
+*.out
+
+# Arquivos de compilação
+*.o
+*.obj
+
+# Builds
+build/
+cmake-build-*/
+
+# Arquivos do VS Code
+.vscode/
+
+# Qt Creator
+*.user
