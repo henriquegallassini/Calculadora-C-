@@ -5,138 +5,208 @@
 #include <cstdlib>
 #include <clocale>
 
+void ClearScreen();
+void ShowMenu();
+void Pause();
+void EndProgram();
+
+int Read_Option();
+long double Read_Number();
+
+long double Soma (long double n1, long double n2);
+long double Subtracao (long double n1, long double n2);
+long double Multiplicacao (long double n1, long double n2);
+long double Divisao (long double n1, long double n2);
+long double Potencia (long double base, long double expoente);
+long double Media (long double n1, long double n2);
+long double Raiz_Quadrada (long double numero);
+
 int main() {
     
    std::setlocale(LC_ALL, "pt_BR.UTF-8");
 
    std::cout << std::fixed << std::setprecision(2); //Ao invés de printar todas as casas decimais ele impre 2 após a vírgula
     
-   int option = -1; // inicializado — usar variável sem valor é comportamento indefinido
+   int option = -1; // inicializado — usar variável sem valor é comportamento indefinido n
    long double n1, n2;
    
    while(option!=0){
+     
+     ClearScreen();
+     ShowMenu();
 
+     option = Read_Option();
+
+     if(option == 0) break;
+
+     std::cout << "Digite o primeiro número: ";
+
+     n1 = Read_Number();
+
+     std::cout << "Digite o segundo número: ";
+     
+     n2 = Read_Number();
+
+     switch (option){
+       case 1:
+         std::cout << "Soma: " << Soma(n1, n2) << "\n";
+         break;
+
+       case 2:
+         std::cout << "Subtração: " << Subtracao(n1, n2) << "\n";
+         break;
+
+       case 3:
+         std::cout << "Multiplicação: " << Multiplicacao(n1, n2) << "\n";
+         break;
+
+       case 4:
+         while(n2 == 0){
+          std::cout << "Impossível divisão por 0, digite outro segundo número." << "\n";
+          std::cout << "Digite um segundo número: ";
+          std::cin >> n2;
+        }
+
+        std::cout << "Divisão: " << Divisao(n1, n2)<< "\n";
+        break;
+
+      case 5:
+      {
+        std::cout << "Potência: " << Potencia(n1, n2) << "\n";
+        break;
+      }
+
+      case 6:
+        std::cout << "Média: " << Media(n1, n2) << "\n";
+        break;
+
+      case 7:
+        while(n1 < 0){
+         std::cout << "Operação impossível, não exite raíz de número negativo tente novamente" << "\n";
+         std::cout << "Digite o primeiro número: ";
+         std::cin >> n1;
+         }
+
+         std::cout << "Raíz Quadrada de " << Raiz_Quadrada(n1) << "\n";
+
+         break;
+
+      default:
+       std::cout << "Opção escolhida é inválida, tente novamente" << "\n";
+       break;
+    }
+
+    Pause();
+  }
+
+    EndProgram();
+    return 0;
+}
+
+void ClearScreen () {
     #ifdef _WIN32
       system("cls");
     #else
       system("clear");
     #endif
-     
-     std::cout << "=========================" << std::endl;
-     std::cout << "|||   CALCULADORA C++ |||" << std::endl;
-     std::cout << "||| ===== Menu ====== |||" << std::endl;
-     std::cout << "|||   [1].Soma        |||" << std::endl;
-     std::cout << "|||   [2].Subtração   |||" << std::endl;
-     std::cout << "|||   [3].Multiplicar |||" << std::endl;
-     std::cout << "|||   [4].Divisão     |||" << std::endl;
-     std::cout << "|||   [5].Potenciação |||" << std::endl;
-     std::cout << "|||   [6].Média       |||" << std::endl;
-     std::cout << "|||   [7].Raíz        |||" << std::endl;     
-     std::cout << "|||   [0].Sair        |||" << std::endl;
-     std::cout << "=========================" << std::endl;
+}
 
-     std::cout << "Escolha uma opção: ";
+void ShowMenu () {
+     std::cout << "=========================" << "\n";
+     std::cout << "|||   CALCULADORA C++ |||" << "\n";
+     std::cout << "||| ===== Menu ====== |||" << "\n";
+     std::cout << "|||   [1].Soma        |||" << "\n";
+     std::cout << "|||   [2].Subtração   |||" << "\n";
+     std::cout << "|||   [3].Multiplicar |||" << "\n";
+     std::cout << "|||   [4].Divisão     |||" << "\n";
+     std::cout << "|||   [5].Potenciação |||" << "\n";
+     std::cout << "|||   [6].Média       |||" << "\n";
+     std::cout << "|||   [7].Raíz        |||" << "\n";     
+     std::cout << "|||   [0].Sair        |||" << "\n";
+     std::cout << "=========================" << "\n";
+}
 
-     while(!(std::cin >> option)){
-        std::cout << "Entrada inválida! Digite apenas números " << std::endl;
+void Pause () {
+    std::cout << "Pressione Enter para continuar" << "\n";
 
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.ignore(
+        std::numeric_limits<std::streamsize>::max(),'\n');
 
-        std::cout << "Escolha uma opção: ";
-        std::cin >> option;
-     }
+    std::cin.get();
+}
 
-      if(option == 0) break;
+void EndProgram () {
+    std::cout << "Finalizando Programa..." << "\n";
+    std::cout << "Pressione Enter para continuar" << "\n";
 
-     std::cout << "Digite o primeiro número: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
 
-     while(!(std::cin >> n1)){
-        std::cout << "Entrada inválida! Digite apenas números " << std::endl;
+    std::cin.get();
+}
 
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+int Read_Option () {
+  int option;
 
-        std::cout << "Digite o primeiro número: ";
-        std::cin >> n1;
-     }
-
-     std::cout << "Digite o segundo número: ";
-
-     while(!(std::cin >> n2)){
-        std::cout << "Entrada inválida! Digite apenas números " << std::endl;
-
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-        std::cout << "Digite o segundo número: ";
-        std::cin >> n2;
-     }
-     
+  while(true) {
     
-     switch (option){
-       case 1:
-         std::cout << "Soma: " << n1 + n2 << std::endl;
-         break;
+    std::cout << "Escolha uma opção: ";
 
-       case 2:
-         std::cout << "Subtração: " << n1 - n2 << std::endl;
-         break;
-
-       case 3:
-         std::cout << "Multiplicação: " << n1 * n2 << std::endl;
-         break;
-
-       case 4:
-         while(n2 == 0){
-          std::cout << "Impossível divisão por 0, digite outro segundo número." << std::endl;
-          std::cout << "Digite um segundo número: ";
-          std::cin >> n2;
-        }
-
-        std::cout << "Divisão: " << n1 / n2 << std::endl;
-        break;
-
-      case 5:
-      {
-        long long int potencia = 1;
-        for(int i=1; i<=n2; i++){
-          potencia = (long double)potencia * n1;
-        }
-        std::cout << "Potência: " << potencia << std::endl;
-        break;
+    if(std::cin >> option) {
+      if(option >= 0 && option <= 7) {
+        return option;
       }
 
-      case 6:
-        std::cout << "Média: " << (n1+n2)/2 << std::endl;
-        break;
+      std::cout << "Opção inválida! Escolha um número de 0 a 7 " << "\n";
 
-      case 7:
-        while(n1 < 0){
-         std::cout << "Operação impossível, não exite raíz de número negativo tente novamente" << std::endl;
-         std::cout << "Digite o primeiro número" << std::endl;
-         std::cin >> n1;
-         }
-
-         while(n2 < 0){
-         std::cout << "Operação impossível, não exite raíz de número negativo tente novamente" << std::endl;
-         std::cout << "Digite o segundo número" << std::endl;
-         std::cin >> n2;
-         }
-
-         std::cout << "Raíz Quadrada de " << n1 << " = " << sqrt(n1) << std::endl;
-         std::cout << "Raíz Quadrada de " << n2 << " = " << sqrt(n2) << std::endl;
-         break;
-
-      default:
-       std::cout << "Opção escolhida é inválida, tente novamente" << std::endl;
-       break;
+    } else {
+      std::cout << "Entrada inválida! Digite apenas números. " << "\n";
+      std::cin.clear();
     }
-    
-    std::cout << "Pressione Enter para continuar" << std::endl;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cin.get();
 
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
   }
-    return 0;
+}
+
+long double Read_Number() {
+  long double number;
+
+  while(!(std::cin >> number)) {
+    std::cout << "Entrada inválida! Digite apenas números" << "\n";
+
+    std::cin.clear();
+
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+
+    std::cout << "Digite novamente: ";
+  }
+  return number;
+}
+
+
+long double Soma (long double n1, long double n2) {
+  return n1 + n2;
+}
+
+long double Subtracao (long double n1, long double n2) {
+  return n1 - n2;
+}
+
+long double Multiplicacao (long double n1, long double n2) {
+  return n1 * n2;
+}
+
+long double Divisao (long double n1, long double n2) {
+  return n1/n2;
+}
+
+long double Potencia (long double base, long double expoente) {
+  return std::pow(base, expoente);
+}
+
+long double Media (long double n1, long double n2) {
+  return (n1+n2)/2.0L;
+}
+
+long double Raiz_Quadrada (long double numero) {
+  return std::sqrt(numero);
 }
