@@ -11,7 +11,7 @@ void Pause();
 void EndProgram();
 
 int Read_Option();
-long double Read_Number();
+long double Read_Number(const char* message);
 
 long double Soma (long double n1, long double n2);
 long double Subtracao (long double n1, long double n2);
@@ -39,53 +39,63 @@ int main() {
 
      if(option == 0) break;
 
-     std::cout << "Digite o primeiro número: ";
-
-     n1 = Read_Number();
-
-     std::cout << "Digite o segundo número: ";
-     
-     n2 = Read_Number();
-
      switch (option){
        case 1:
-         std::cout << "Soma: " << Soma(n1, n2) << "\n";
-         break;
+        n1 = Read_Number("Digite o primeiro número: ");
+        n2 = Read_Number("Digite o segundo número: ");
+
+        std::cout << "Soma: " << Soma(n1, n2) << "\n";
+        break;
 
        case 2:
-         std::cout << "Subtração: " << Subtracao(n1, n2) << "\n";
-         break;
+        n1 = Read_Number("Digite o primeiro número: ");
+        n2 = Read_Number("Digite o segundo número: ");
+
+        std::cout << "Subtração: " << Subtracao(n1, n2) << "\n";
+        break;
 
        case 3:
-         std::cout << "Multiplicação: " << Multiplicacao(n1, n2) << "\n";
-         break;
+        n1 = Read_Number("Digite o primeiro número: ");
+        n2 = Read_Number("Digite o segundo número: ");
+
+        std::cout << "Multiplicação: " << Multiplicacao(n1, n2) << "\n";
+        break;
 
        case 4:
-         while(n2 == 0){
-          std::cout << "Impossível divisão por 0, digite outro segundo número." << "\n";
-          std::cout << "Digite um segundo número: ";
-          std::cin >> n2;
+        n1 = Read_Number("Digite o primeiro número: ");
+        n2 = Read_Number("Digite o segundo número: ");
+
+        while(n2 == 0){
+          std::cout << "Impossível! Divisão por 0 é inválido, tente de novo" << "\n";
+          n2 = Read_Number("Digite o segundo número: ");
         }
 
         std::cout << "Divisão: " << Divisao(n1, n2)<< "\n";
         break;
 
       case 5:
+        n1 = Read_Number("Digite o primeiro número: ");
+        n2 = Read_Number("Digite o segundo número: ");
+
       {
         std::cout << "Potência: " << Potencia(n1, n2) << "\n";
         break;
       }
 
       case 6:
+        n1 = Read_Number("Digite o primeiro número: ");
+        n2 = Read_Number("Digite o segundo número: ");
+
         std::cout << "Média: " << Media(n1, n2) << "\n";
         break;
 
       case 7:
+        n1 = Read_Number("Digite o primeiro número: ");
+
         while(n1 < 0){
-         std::cout << "Operação impossível, não exite raíz de número negativo tente novamente" << "\n";
-         std::cout << "Digite o primeiro número: ";
-         std::cin >> n1;
-         }
+          std::cout << "Impossível! Não existe raiz de número negativo, tente de novo" << "\n";
+          n1 = Read_Number("Digite o primeiro número: ");
+        }
 
          std::cout << "Raíz Quadrada de " << Raiz_Quadrada(n1) << "\n";
 
@@ -167,21 +177,23 @@ int Read_Option () {
   }
 }
 
-long double Read_Number() {
+long double Read_Number(const char* message) {
   long double number;
 
-  while(!(std::cin >> number)) {
-    std::cout << "Entrada inválida! Digite apenas números" << "\n";
+  while(true) {
+    std::cout << message;
+
+    if(std::cin >> number) {
+      return number;
+    }
+
+    std::cout << "Entrada inválida! Digite apenas números.\n";
 
     std::cin.clear();
 
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-
-    std::cout << "Digite novamente: ";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   }
-  return number;
 }
-
 
 long double Soma (long double n1, long double n2) {
   return n1 + n2;
