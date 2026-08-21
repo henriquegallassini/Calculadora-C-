@@ -5,11 +5,11 @@
 #include <cstdlib>
 
 void ClearScreen () {
-    #ifndef _WIN32
-      system("cls");
-    #else
-      system("clear");
-    #endif
+#if defined(_WIN32) || defined(_WIN64)
+    std::system("cls");
+#else
+    std::system("clear");
+#endif
 }
 
 void ShowMenu () {

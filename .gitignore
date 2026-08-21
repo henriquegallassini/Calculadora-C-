@@ -8,6 +8,7 @@
 
 # Builds
 build/
+build-qt/
 cmake-build-*/
 
 # Arquivos do VS Code
