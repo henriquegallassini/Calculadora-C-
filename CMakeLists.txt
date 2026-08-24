@@ -38,3 +38,37 @@ target_link_libraries(
     PRIVATE
     Qt6::Widgets   
 )
+
+# ==========================================
+# DEPLOY AUTOMÁTICO DAS DLLs DO QT
+# ==========================================
+
+get_target_property(
+    QT_QMAKE_EXECUTABLE
+    Qt6::qmake
+    IMPORTED_LOCATION
+)
+
+get_filename_component(
+    QT_BIN_DIR
+    "${QT_QMAKE_EXECUTABLE}"
+    DIRECTORY
+)
+
+find_program(
+    WINDEPLOYQT_EXECUTABLE
+    windeployqt
+    HINTS "${QT_BIN_DIR}"
+)
+
+add_custom_command(
+    TARGET CalculadoraDesktop
+    POST_BUILD
+
+    COMMAND
+        "${WINDEPLOYQT_EXECUTABLE}"
+        "$<TARGET_FILE:CalculadoraDesktop>"
+
+    COMMENT
+        "Copiando dependencias do Qt..."
+)
